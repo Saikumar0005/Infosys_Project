@@ -20,18 +20,19 @@ const Login = () => {
 
     try {
       const response = await login({ email, password });
-      setSuccess(response.message || 'Login successful!');
-      setTimeout(() => navigate('/'), 1500);
+      const successMessage = response && response.message ? String(response.message) : 'Welcome! You have successfully logged into your account.';
+      setSuccess(successMessage);
+      setTimeout(() => navigate('/dashboard'), 2000);
     } catch (err) {
-      console.error(err);
-      setError('Invalid email or password. Please try again.');
+      console.log('Login error:', err);
+      setError('Login failed. Please check your credentials.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-900 via-blue-800 to-purple-900 px-4">
       <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-gray-800">Welcome Back</h2>
